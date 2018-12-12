@@ -25,7 +25,7 @@ def statisticalMoments(files, images):
     row = []
     i = 0
     for img in images:
-        row.append(files[i].rsplit('\\', 1)[1])   # Adiciona o nome da imagem no arquivo
+        row.append(files[i].rsplit('\\', 1)[1])  # Adiciona o nome da imagem no arquivo
         row.append(np.mean(img))
         row.append(np.var(img))
         row.append(kurtosis(img, axis=None, fisher=False))  # Nao usa a definicao de Fisher e calcula sobre a imagem inteira
@@ -62,7 +62,7 @@ def huMoments(files, images):
     row = []
     i = 0
     for img in images:
-        row.append(files[i])  # Adiciona o nome da imagem no arquivo
+        row.append(files[i].rsplit('\\', 1)[1])  # Adiciona o nome da imagem no arquivo
         ret, th = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
         M = cv2.moments(th, True)
         row.extend(list(cv2.HuMoments(M).flatten()))
@@ -99,7 +99,7 @@ def haralickMoments(files, images):
     row = []
     i = 0
     for img in images:
-        row.append(files[i])  # Adiciona o nome da imagem no arquivo
+        row.append(files[i].rsplit('\\', 1)[1])  # Adiciona o nome da imagem no arquivo
         row.extend(list(mahotas.features.haralick(img).mean(0)))
         if 'high' in files[i]:
             writer.writerow(row)
@@ -138,7 +138,7 @@ def lbp(files, images):
     row = []
     i = 0
     for img in images:
-        row.append(files[i])  # Adiciona o nome da imagem no arquivo
+        row.append(files[i].rsplit('\\', 1)[1])  # Adiciona o nome da imagem no arquivo
         lbp = feature.local_binary_pattern(img, lbp_sampling_points, lbp_sampling_radius, method=method)
         (hist, _) = np.histogram(lbp.ravel(), bins=np.arange(0, lbp_sampling_points + 3), range=(0, lbp_sampling_points + 2))
         hist = hist.astype("float")
